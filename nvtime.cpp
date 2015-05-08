@@ -34,6 +34,39 @@ uint16_t days_m(uint8_t v, uint8_t leap_offset)
 	return days;
 }
 
+uint32_t year(uint32_t *v)
+{
+	uint32_t year = START_YEAR;
+	
+	while(*v >= YEAR_DAYS)
+	{
+		if(is_leap(year))
+			*v-=LEAP_YEAR_DAYS;
+		else
+			*v-=YEAR_DAYS;
+		year++;
+	}
+	
+	return year;
+}
+
+uint8_t month(uint32_t *v)
+{
+	uint8_t month = 0;
+	while(*v >= month_days_count[month])
+	{
+		*v-= month_days_count[month];
+		month++;
+	}
+
+	return month + 1;
+}
+
+uint32_t nvtimestampoffset()
+{
+	return START_OFFSET;
+}
+
 //DD,MM,YYYY //hhmmss
 #ifdef WITH_TIME
 uint32_t nvtimestamp(uint8_t *date, uint8_t *time)
@@ -74,34 +107,6 @@ uint32_t nvtimestamp(uint8_t *date)
 	return (ydays * SECONDS_IN_DAY);
 #endif
 
-}
-
-uint32_t year(uint32_t *v)
-{
-	uint32_t year = START_YEAR;
-	
-	while(*v >= YEAR_DAYS)
-	{
-		if(is_leap(year))
-			*v-=LEAP_YEAR_DAYS;
-		else
-			*v-=YEAR_DAYS;
-		year++;
-	}
-	
-	return year;
-}
-
-uint16_t month(uint32_t *v)
-{
-	uint8_t month = 0;
-	while(*v >= month_days_count[month])
-	{
-		*v-= month_days_count[month];
-		month++;
-	}
-
-	return month + 1;
 }
 
 void nvdatetime(uint32_t timestamp, nvtime_t *v)

@@ -1,3 +1,6 @@
+#ifndef __NVTIME_H
+#define __NVTIME_H
+
 #include "stdint.h"
 #define START_YEAR			2015
 #define LEAP_YEAR_DAYS		366
@@ -6,6 +9,7 @@
 #define SECONDS_IN_HOUR		3600
 #define SECONDS_IN_MINUTE	60
 
+#define START_OFFSET		1420070400 //2015-01-01 00:00:00
 
 typedef struct nvtime
 {
@@ -28,3 +32,5 @@ uint32_t nvtimestamp(uint8_t *date, uint8_t *time);
 uint32_t nvtimestamp(uint8_t *date);
 #endif
 void nvdatetime(uint32_t timestamp, nvtime_t *v);
+uint32_t nvtimestampoffset();
+#endif
