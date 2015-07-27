@@ -27,10 +27,14 @@ typedef struct nvtime
 #endif
 
 #ifdef WITH_TIME
-uint32_t nvtimestamp(uint8_t *date, uint8_t *time);
+uint32_t nvtimestamp(uint8_t *date, uint8_t *time);	//encode with time
 #else
-uint32_t nvtimestamp(uint8_t *date);
+uint32_t nvtimestamp(uint8_t *date);				//encode only date
 #endif
-void nvdatetime(uint32_t timestamp, nvtime_t *v);
-uint32_t nvtimestampoffset();
+uint32_t nvtimestamp(int Y,int M,int D);			//datestamp form Y,M,D
+
+void nvdatetime(uint32_t timestamp, nvtime_t *v);	//decode from timestamp
+uint32_t nvtimestampoffset();						//start offset
+uint32_t nvtimestamp(uint8_t *time);				// from GPS string only time
+
 #endif

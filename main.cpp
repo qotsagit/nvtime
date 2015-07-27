@@ -23,7 +23,12 @@ void main()
 	nvtime_t a;
 	nvdatetime(t, &a);
 	
+	uint32_t b = nvtimestamp(2150,10,31);
+
+	fprintf(stderr,"%u\n%u\n",b,b+1420070400);
+	
 	fprintf(stderr,"%02d-%02d-%02d\n",a.Y,a.M,a.D);
+
 
 	
 	//	a & 1

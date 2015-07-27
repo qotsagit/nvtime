@@ -109,6 +109,41 @@ uint32_t nvtimestamp(uint8_t *date)
 
 }
 
+uint32_t nvtimestamp(uint8_t *time) // from GPS
+{
+	uint8_t chh[2];	chh[0] = time[0];	chh[1] = time[1];
+	uint8_t cmm[2];	cmm[0] = time[2];	cmm[1] = time[3];
+	uint8_t css[2];	css[0] = time[4];	css[1] = time[5];
+	
+	uint8_t h = atoi((const char*)chh);
+	uint8_t m = atoi((const char*)cmm);
+	uint8_t s = atoi((const char*)css);
+
+	return	(h * SECONDS_IN_HOUR) + (m * SECONDS_IN_MINUTE) + s;
+}
+
+
+uint32_t nvtimestamp(int Y,int M,int D)
+{
+	uint16_t cY = Y;
+	cY = Y - START_YEAR;
+	M = M - 1;
+	D = D - 1;
+
+	uint32_t ydays = days_y(cY,Y);
+
+	uint8_t leap_offset = 0;
+	if(is_leap(cY) && M > 1) //is current year leap ?
+		leap_offset = 1;
+
+	uint16_t mdays = days_m(M,leap_offset);
+	ydays = ydays + mdays + D;
+
+	return (ydays * SECONDS_IN_DAY);
+
+}
+
+
 void nvdatetime(uint32_t timestamp, nvtime_t *v)
 {
 	uint32_t days	 = timestamp / SECONDS_IN_DAY;
